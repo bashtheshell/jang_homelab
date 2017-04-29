@@ -1,0 +1,124 @@
+#
+# This is a file with all bash variables used in kickstart file and all first-boot scripts
+#
+# Filename: custom-variables-fb.var
+#
+
+#########################################################################
+# The following variables are used for the physical host kickstart file #
+# Please substitue them according to your environment                   #
+#########################################################################
+
+
+### Use for 'url' option 
+# Ex. url --url=http://172.16.1.250/
+INSTALLTREEURL=http://172.16.1.250/
+
+
+### Use for 'rootpw' option
+# Ex. rootpw --iscrypted $6$Yz7wxP/Y$MbzPwMbBKmLQadMs.IyMa7g61kWdMvFiT7bgB5l4VG9J8eBTuWQeMfbJ7E.1jw3/NXTl9xjHXp.xQ50Fk7CIH.
+#
+# NOTE: Enclose your password in single quotes ' '
+ROOTPASS='$6$Yz7wxP/Y$MbzPwMbBKmLQadMs.IyMa7g61kWdMvFiT7bgB5l4VG9J8eBTuWQeMfbJ7E.1jw3/NXTl9xjHXp.xQ50Fk7CIH.'
+
+
+### Use for 'network' option
+# Ex. network  --bootproto=static --device=enp3s0 --gateway=172.16.1.1 --ip=172.16.1.50 --nameserver=172.16.1.1 --netmask=255.255.255.0 --ipv6=auto --activate
+#     network  --hostname=hostname.domain.net
+NETDEVICE=enp3s0
+NETGATEWAY=172.16.1.1 
+NETIP=172.16.1.50 
+NETNAMESERVER=172.16.1.1
+NETSUBNETMASK=255.255.255.0
+NETFQDN=hostname.domain.net
+
+
+### Use for 'user' option
+# Ex. user --groups=wheel --name=custom_user --password=$6$Yz7wxP/Y$MbzPwMbBKmLQadMs.IyMa7g61kWdMvFiT7bgB5l4VG9J8eBTuWQeMfbJ7E.1jw3/NXTl9xjHXp.xQ50Fk7CIH. --iscrypted --gecos="Custom User"
+#
+# NOTE: Enclose your password in single quotes ' '
+ACCTUSERNAME=custom_user
+ACCTUSERPASS='$6$Yz7wxP/Y$MbzPwMbBKmLQadMs.IyMa7g61kWdMvFiT7bgB5l4VG9J8eBTuWQeMfbJ7E.1jw3/NXTl9xjHXp.xQ50Fk7CIH.'
+ACCTUSERGECOS="Custom User"
+
+
+### Use for 'ignoredisk' option
+# Ex. ignoredisk --only-use=sda
+ONLYUSEDISK=sda
+
+
+### Use for 'bootloader' option
+# Ex. bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
+BOOTLOADERDISK=sda
+
+
+### Use for 'volgroup' and 'logvol' option
+# Ex. volgroup mainVG --pesize=4096 pv.1
+#     logvol /home  --fstype="xfs" --size=40960 --name=home --vgname=mainVG
+#     logvol /  --fstype="xfs" --size=71752 --name=root --vgname=mainVG
+#     logvol swap  --fstype="swap" --size=2048 --name=swap --vgname=mainVG
+VOLGROUPNAME=mainVG
+
+
+#########################################################################
+# The following variable is found in the '%pre' section of kickstart    #
+#########################################################################
+
+
+### Set to your spare SSD drive (not in used with other OSes) as it will be formatted
+# Ex. sgdisk --zap-all /dev/sdc
+SSDDRIVE=/dev/sdc
+
+
+#########################################################################
+# The following variables are found in the '%post' section of kickstart #
+#########################################################################
+
+
+### Web URL to the world-readable private key for Bitbucket stored on local web server isolated from the Internet
+# Ex. http://172.16.1.250/kickstart/bitbucket_key
+BITBUCKETPRIVATEKEY=http://172.16.1.250/kickstart/bitbucket_key
+
+
+### Directory where all first-boot scripts and configuration files will be placed.
+### NOTE: Top-level directory on '/' (root) is recommended due to confined SElinux setting during boot
+# Ex. /firstboot
+BUILDDIR=/firstboot
+
+
+### The private bitbucket repo ( excluding https://bitbucket.org/ )
+# Ex. my_account_username/my_repo.git
+BITBUCKETREPO=my_account_username/my_repo.git
+
+
+# ACCTUSERNAME is already defined from above
+
+
+#########################################################################
+#       Those are variables found in '*-fb.sh' script files             #
+#########################################################################
+
+### Below are self-explanatory after reviewing above definitions
+buildDir=$BUILDDIR
+ssdDrive=$SSDDRIVE
+volGroupName=$VOLGROUPNAME
+bitbucketRepo=$BITBUCKETREPO
+netFQDN=$NETFQDN
+netIP=$NETIP
+rootPass=$ROOTPASS
+acctUserName=$ACCTUSERNAME
+acctUserPass=$ACCTUSERPASS
+acctUserGECOS=$ACCTUSERGECOS
+
+
+### Set the listening port for SSH server
+sshPort=2222
+
+
+### Email address to send notification to regarding public IP address change
+emailAddress=sendit2me@myemail.com
+
+
+### Web URL location of OS image (preferably from local web server)
+osImageURL=http://172.16.1.250/centos_image/CentOS-7-x86_64-DVD-1611.iso
+

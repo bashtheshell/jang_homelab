@@ -1,0 +1,36 @@
+#
+# This systemd unit file runs the 'main-script-fb.sh' during first boot
+# which automatically configures the server after fresh system install.
+#
+# Filename: firstboot-fb.service
+#
+# Refer to following documentation for more information:
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+
+[Unit]
+Description=Configuring the server for first-boot
+
+# Run this service after all depended services have started...
+#
+# Changes here should be consistent with the enabled 'services' option in physicalhost-ks.cfg
+# and server packages in the %packages section.
+
+After=network.target firewalld.service fail2ban.service sshd.service httpd.service vsftpd.service libvirtd.service
+Requires=firewalld.service fail2ban.service sshd.service httpd.service vsftpd.service libvirtd.service
+
+
+# ...but before users are permitted to login 
+Before=systemd-user-sessions.service
+Wants=systemd-user-sessions.service
+
+# Only run this service once
+ConditionPathExists=!_BuildDir/.ranonce
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -c '_BuildDir/main-script-fb.sh >>_BuildDir/output/output.txt 2>&1'
+TimeoutSec=0
+
+[Install]
+WantedBy=multi-user.target
+

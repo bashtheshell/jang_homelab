@@ -1,0 +1,16 @@
+#
+# The wishlist file for the 'sshd_config_modifier-fb.sh' script
+# to configure the 'sshd_config' file. You may make customization 
+# here below.
+#
+# Filename: add_sshd-fb.txt
+#
+Port 22
+PermitEmptyPasswords no
+Protocol 2
+IgnoreRhosts yes
+HostbasedAuthentication no
+PubkeyAuthentication yes
+PermitRootLogin no
+PasswordAuthentication no
+

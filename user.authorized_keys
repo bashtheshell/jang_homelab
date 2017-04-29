@@ -1,0 +1,7 @@
+#
+# Place your SSH pubkey here so you can access
+# your physical host server via SSH from another computer
+#
+# Filename: user.authorized_keys
+#
+
