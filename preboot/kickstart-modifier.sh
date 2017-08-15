@@ -27,6 +27,7 @@ kickstartFile=./physicalhost-ks.cfg
 # ONLYUSEDISK
 # BOOTLOADERDISK
 # VOLGROUPNAME
+# NETMAC
 # SSDDRIVE
 # BITBUCKETPRIVATEKEY
 # BUILDDIR
@@ -46,6 +47,7 @@ sed -i "s/ACCTUSERGECOS/$ACCTUSERGECOS/g" $kickstartFile
 sed -i "s/ONLYUSEDISK/$ONLYUSEDISK/g" $kickstartFile
 sed -i "s/BOOTLOADERDISK/$BOOTLOADERDISK/g" $kickstartFile
 sed -i "s/VOLGROUPNAME/$VOLGROUPNAME/g" $kickstartFile
+sed -i "s/NETMAC/$NETMAC/g" $kickstartFile
 sed -i "s,SSDDRIVE,$SSDDRIVE,g" $kickstartFile
 sed -i "s,BITBUCKETPRIVATEKEY,$BITBUCKETPRIVATEKEY,g" $kickstartFile
 sed -i "s,BUILDDIR,$BUILDDIR,g" $kickstartFile

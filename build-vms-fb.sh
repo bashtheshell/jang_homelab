@@ -69,13 +69,9 @@ do
 	--disk device=disk,path=/dev/$server/hdd1,bus=scsi,cache=none,discard=unmap,format=raw \
 	--disk device=disk,path=/dev/$server/hdd2,bus=scsi,cache=none,discard=unmap,format=raw \
 	--disk device=disk,path=/dev/$server/hdd3,bus=scsi,cache=none,discard=unmap,format=raw \
-	--serial pty,name=serial0 \
-	--console pty,target_type=serial,name=serial0 \
-	--serial pty,name=console1 \
-	--console pty,target_type=virtio,name=console1 \
 	--controller scsi,model=virtio-scsi \
 	--initrd-inject "${buildDir}/${server}-ks.cfg" \
-	--extra-args "inst.ks=file:/${server}-ks.cfg" \
+	--extra-args "inst.ks=file:/${server}-ks.cfg console=tty0 console=ttyS0" \
 	--noautoconsole \
 	--noreboot
 	
@@ -145,4 +141,10 @@ virt-sysprep \
 --firstboot-command "sed -i.backup 's/server1VG1/clone1VG1/g' /boot/grub2/grub.cfg" \
 --hostname clone1.example.org \
 --domain clone1.example.org
+
+
+# Copy the qemu script to enable VMs to communicate with each other
+mkdir /etc/libvirt/hooks
+cp $buildDir/qemu-hooks-fb.sh /etc/libvirt/hooks/qemu
+chmod +x /etc/libvirt/hooks/qemu
 

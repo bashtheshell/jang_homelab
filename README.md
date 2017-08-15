@@ -43,6 +43,7 @@ This configurator assumes the following configurations are true. Modification to
 **IP address:** 172.16.1.50/24 (static)  
 **Gateway:** 172.16.1.1  
 **Nameserver:** 172.16.1.1  
+**MAC Address:** AA:BB:CC:DD:EE:FF  
 **Administrative user:** custom_user  
 **/boot partition**: mount on `/dev/sda3` (size 768 MiB)  
 **LVM use?:** Volume Group **mainVG** on `/dev/sda5` (use entire remaining disk space)  
@@ -144,10 +145,13 @@ To understand how this configurator comes together in pieces, inspect each file 
 *[build-vms-fb.sh](./build-vms-fb.sh)*
   > Set up VMs and install guest OSes
   
+*[qemu-hooks-fb.sh](./qemu-hooks-fb.sh)*
+  > Allow bidirectional communication between VMs behind NAT-T networks
+  
+ 
 The security configurations in the following scripts and configuration files are by no means exhaustive and is not recommended for use outside of personal homelab:
 
 - *[sysctl-fb.sh](./sysctl-fb.sh)* 
 - *[tcpwrapper-fb.sh](tcpwrapper-fb.sh)* 
 - *[add_sshd-fb.txt](./add_sshd-fb.txt)*
 - *[fail2ban-fb.sh](./fail2ban-fb.sh)*
-

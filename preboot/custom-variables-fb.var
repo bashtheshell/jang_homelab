@@ -65,6 +65,10 @@ VOLGROUPNAME=mainVG
 #########################################################################
 
 
+### Set to your machine MAC address used for aborting the installion if the address does not match
+NETMAC=AA:BB:CC:DD:EE:FF
+
+
 ### Set to your spare SSD drive (not in used with other OSes) as it will be formatted
 # Ex. sgdisk --zap-all /dev/sdc
 SSDDRIVE=/dev/sdc
