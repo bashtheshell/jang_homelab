@@ -54,13 +54,6 @@ sgdisk -n 5:0:+18G -t 5:8e00 -c 5:"clone1 LVM" $ssdDrive
 partprobe $ssdDrive
 
 
-# Set up physical volumes on all partitions:
-for num in {2..5}
-do
-	pvcreate "$ssdDrive"$num
-done
-
-
 # Define libvirt storage pool:
 virsh pool-define-as server1 logical - - "$ssdDrive"2 server1
 virsh pool-define-as tester1 logical - - "$ssdDrive"3 tester1
