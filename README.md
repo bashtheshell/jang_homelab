@@ -17,9 +17,9 @@ This is a linux homelab configurator based on lab scenarios in seventh edition o
 This configurator assumes the following configurations are true. Modification to the [custom-variables-fb.var](./preboot/custom-variables-fb.var) may be needed to suit your environment.
 
 - The physical machine uses BIOS. EFI/UEFI system may not be compatible due to secure boot feature. NOTE: Legacy option in UEFI/EFI for backward compatibility has not been tested yet. Please report if confirmed supported or unsupported.
-- CentOS 7.3 HTTP install tree (for physical machine) is located at a local IP address:  `172.16.1.250/24`
+- CentOS 7.4 HTTP install tree (for physical machine) is located at a local IP address:  `172.16.1.250/24`
 - The private key (for private repository on Bitbucket.org) is located at `http://172.16.1.250/kickstart/bitbucket_key`
-- The CentOS 7.3 ISO image is also located on the same server at `http://172.16.1.250/centos_image/CentOS-7-x86_64-DVD-1611.iso`
+- The CentOS 7.4 ISO image is also located on the same server at `http://172.16.1.250/centos_image/CentOS-7-x86_64-DVD-1708.iso`
 - All files in this repository are in a Bitbucket private repository
 - Your public SSH key is added to [*user.authorized_keys*](./user.authorized_keys) file
 - Primary hard drive is on `/dev/sda` with two pre-existing Windows partitions on `/dev/sda1` and `/dev/sda2` with at least 120 GB of remaining free space
@@ -38,7 +38,7 @@ This configurator assumes the following configurations are true. Modification to
 
 
 ### SYSTEM CONFIGURATION:
-**Operating system:** CentOS 7.3  
+**Operating system:** CentOS 7.4  
 **Hostname:** hostname.domain.net
 **IP address:** 172.16.1.50/24 (static)  
 **Gateway:** 172.16.1.1  
@@ -64,7 +64,7 @@ Before you can begin, do the following in order:
 
 
 ### SECURITY CONCERN: 
-The security implication of this homelab configurator is by no means very secured. If you are uncomfortable having your private key sitting on a local web server, then feel free make customization to the [*physicalhost-ks.cfg*](./preboot/physicalhost-ks.cfg) kickstart file in **%post** script section. Instead, you can actually have the entire install tree and private key on a USB flash drive. However, such instruction will not be provided here. 
+The security implication of this homelab configurator is by no means very secured. If you are uncomfortable having your private key sitting on a local web server, then feel free make customization to the [*physicalhost-ks.cfg*](./preboot/physicalhost-ks.cfg) kickstart file in **%post** script section. Instead, you can actually have the entire install tree and private key on a USB flash drive. However, such instruction will not be provided here. Also, two files, [custom-variables-fb.var](./preboot/custom-variables-fb.var) and [physicalhost-ks.cfg](./preboot/physicalhost-ks.cfg), would contain sensitive information such as hashed passwords.  
 
 
 ### FILES OVERVIEW: 
@@ -147,7 +147,9 @@ To understand how this configurator comes together in pieces, inspect each file 
   
 *[qemu-hooks-fb.sh](./qemu-hooks-fb.sh)*
   > Allow bidirectional communication between VMs behind NAT-T networks
-  
+
+*[rebuild-vms-fb.sh](./rebuild-vms-fb.sh)*
+  > Optional wrapper script to conveniently rebuild the guest VMs typically use for post-installation activities.
  
 The security configurations in the following scripts and configuration files are by no means exhaustive and is not recommended for use outside of personal homelab:
 

@@ -125,4 +125,3 @@ emailAddress=sendit2me@myemail.com
 
 ### Web URL location of OS image (preferably from local web server)
 osImageURL=http://172.16.1.250/centos_image/CentOS-7-x86_64-DVD-1611.iso
-
