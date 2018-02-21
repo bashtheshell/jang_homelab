@@ -7,6 +7,10 @@
 #
 # NOTE: DON'T FORGET TO MAKE THIS FILE EXECUTABLE IF YOU WANT TO USE IT
 #
+# If you come across an issue with this script. Please try removing the ISO
+# image from the build directory ($buildDir) and run this script again
+# without interruption. Otherwise, submit an issue on GitHub.
+#
 # Filename: rebuild-vms-fb.sh
 #
 # Variables: $netIP, $buildDir 
@@ -14,7 +18,7 @@
 source ./custom-variables-fb.var
 
 image_file=""
-
+image_size="" #size in bytes
 
 ##########################################################
 # Customize the variables below to suit your environment #
@@ -46,27 +50,33 @@ vmhosts="server1 tester1 outsider1 clone1"
 case $minor_release in
 	7.0)
 		image_file="CentOS-7.0-1406-x86_64-Everything.iso"
+		image_size=7062159360
 		;;
 	7.1)
 		image_file="CentOS-7-x86_64-Everything-1503-01.iso"
+		image_size=7591690240
 		;;
 	7.2)
 		image_file="CentOS-7-x86_64-Everything-1511.iso"
+		image_size=7769948160
 		;;
 	7.3)
 		image_file="CentOS-7-x86_64-Everything-1611.iso"
+		image_size=8280604672
 		;;
 	7.4)
 		image_file="CentOS-7-x86_64-Everything-1708.iso"
+		image_size=8694792192
 		;;
 	*)
 		image_file="CentOS-7.0-1406-x86_64-Everything.iso"
+		image_size=7062159360
 		;;
 esac
 
 
 ### Replace image in the install trees if necessary
-if [ ! -f $buildDir/$image_file ]
+if [ ! -e $buildDir/$image_file ] || [ $(du -b "$buildDir/$image_file" | cut -f 1) -ne $image_size ]
 then
 	### Replace the existing Web URL location of the image with a new one
 	sed -i "s,^osImageURL=.*,osImageURL=${image_path}${image_file},g" ./custom-variables-fb.var
@@ -157,5 +167,4 @@ done
 ### Rebuid the VMs
 sed -i "s/^hosts=.*/hosts=\"${vmhosts}\"/" $buildDir/build-vms-fb.sh
 bash -x $buildDir/build-vms-fb.sh
-
 
