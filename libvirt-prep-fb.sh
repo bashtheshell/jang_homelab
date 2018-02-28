@@ -36,14 +36,36 @@ virsh net-autostart outsider
 virsh net-start outsider
 
 
-# Add DHCP clients for Default network:
-virsh net-update default add ip-dhcp-host "<host mac='00:11:22:33:44:01' name='server1' ip='192.168.122.50' />" --config --live
-virsh net-update default add ip-dhcp-host "<host mac='00:11:22:33:44:11' name='tester1' ip='192.168.122.150' />" --config --live
+# Add DHCP clients (server1, tester1) for Default network:
+virsh net-update default add ip-dhcp-host "<host mac='00:11:22:33:44:01' ip='192.168.122.50' />" --config --live
+virsh net-update default add ip-dhcp-host "<host mac='00:11:22:33:44:11' ip='192.168.122.150' />" --config --live
 
 
-# Add the DHCP clients for Outsider network:
-virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:21' name='outsider1' ip='192.168.100.100' />" --config --live
-virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:31' name='clone1' ip='192.168.100.50' />" --config --live
+# Add the DHCP clients (outsider1, clone1) for Outsider network:
+virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:21' ip='192.168.100.100' />" --config --live
+virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:31' ip='192.168.100.50' />" --config --live
+
+
+# Temporarily stop both networks to disable DNS:
+virsh net-destroy default
+virsh net-destroy outsider
+sed -i '/<ip.*>$/i\  \<dns enable="no"\/>' /etc/libvirt/qemu/networks/default.xml
+sed -i '/<ip.*>$/i\  \<dns enable="no"\/>' /etc/libvirt/qemu/networks/outsider.xml
+
+
+# Restart both networks with new modification:
+cp /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/default.xml.bkup
+cp /etc/libvirt/qemu/networks/outsider.xml /etc/libvirt/qemu/networks/outsider.xml.bkup
+virsh net-undefine default
+virsh net-undefine outsider
+mv /etc/libvirt/qemu/networks/default.xml.bkup /etc/libvirt/qemu/networks/default.xml
+mv /etc/libvirt/qemu/networks/outsider.xml.bkup /etc/libvirt/qemu/networks/outsider.xml
+virsh net-define /etc/libvirt/qemu/networks/default.xml
+virsh net-define /etc/libvirt/qemu/networks/outsider.xml
+virsh net-autostart default
+virsh net-autostart outsider
+virsh net-start default
+virsh net-start outsider
 
 
 # Format 4 more partitions on /dev/sdc drive:
