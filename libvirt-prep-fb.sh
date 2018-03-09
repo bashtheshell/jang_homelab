@@ -46,11 +46,19 @@ virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:21' ip='19
 virsh net-update outsider add ip-dhcp-host "<host mac='00:11:22:33:44:31' ip='192.168.100.50' />" --config --live
 
 
-# Temporarily stop both networks to disable DNS:
+# Temporarily stop both networks
 virsh net-destroy default
 virsh net-destroy outsider
+
+
+# Disable DNS:
 sed -i '/<ip.*>$/i\  \<dns enable="no"\/>' /etc/libvirt/qemu/networks/default.xml
 sed -i '/<ip.*>$/i\  \<dns enable="no"\/>' /etc/libvirt/qemu/networks/outsider.xml
+
+
+# Change from 'nat' mode to 'route' mode:
+sed -i "s/<forward mode='.*'/<forward mode='route'/" /etc/libvirt/qemu/networks/default.xml
+sed -i "s/<forward mode='.*'/<forward mode='route'/" /etc/libvirt/qemu/networks/outsider.xml
 
 
 # Restart both networks with new modification:

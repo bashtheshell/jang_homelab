@@ -170,7 +170,9 @@ fi
 
 
 # Copy the qemu script to enable VMs to communicate with each other
-mkdir /etc/libvirt/hooks
-cp $buildDir/qemu-hooks-fb.sh /etc/libvirt/hooks/qemu
-chmod +x /etc/libvirt/hooks/qemu
+# UNCOMMENT THE LINES BELOW IF YOU ARE USING VIRTUAL NETWORKS WITH 'NAT' MODE
+#
+# mkdir /etc/libvirt/hooks
+# cp $buildDir/qemu-hooks-fb.sh /etc/libvirt/hooks/qemu
+# chmod +x /etc/libvirt/hooks/qemu
 

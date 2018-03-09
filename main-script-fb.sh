@@ -35,6 +35,8 @@ restart-firewall-sshd-fb.sh
 lvm_cache_trim-fb.sh
 rebuilt4next_reboot-fb.sh
 ssmtp-fb.sh
+ntp_server_setup-fb.sh
+dns_server_setup-fb.sh
 http_ftp_install-tree-fb.sh
 add-hosts-fb.sh
 libvirt-prep-fb.sh

@@ -17,3 +17,6 @@ firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" sourc
 firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.122.0/24" service name="http" accept'
 firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.100.0/24" service name="ftp" accept'
 firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.100.0/24" service name="http" accept'
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.100.50" service name="ntp" accept'
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.122.50" service name="ntp" accept'
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.100.50" service name="dns" accept'

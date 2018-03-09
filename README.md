@@ -126,7 +126,13 @@ To understand how this configurator comes together in pieces, inspect each file 
   
 *[check_ip.sh](./check_ip.sh)*
   > The above script depends on this script to check IP address change.
-  
+
+*[ntp_server_setup-fb.sh](./ntp_server_setup-fb.sh)*
+  > Set up the **NTP** server for two guest VMs
+
+*[dns_server_setup-fb.sh](./dns_server_setup-fb.sh)*
+  > Set up a caching **DNS** server only for the guest VMs
+
 *[http_ftp_install-tree-fb.sh](./http_ftp_install-tree-fb.sh)*
   > Set up **HTTP** and **FTP** install trees on the physical server for VMs
   
