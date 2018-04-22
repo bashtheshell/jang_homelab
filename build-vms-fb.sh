@@ -159,6 +159,8 @@ then
 	--firstboot-command 'vgrename server1VG1 clone1VG1' \
 	--firstboot-command "sed -i.backup 's/server1VG1/clone1VG1/g' /etc/fstab" \
 	--firstboot-command "sed -i.backup 's/server1VG1/clone1VG1/g' /boot/grub2/grub.cfg" \
+	--firstboot-command 'nmcli device disconnect eth0' \
+	--firstboot-command 'nmcli device disconnect eth1' \
 	--firstboot-command 'nmcli connection modify eth0 802-3-ethernet.mac-address 00:11:22:33:44:31' \
 	--firstboot-command 'nmcli connection modify eth1 802-3-ethernet.mac-address 00:11:22:33:44:32' \
 	--hostname clone1.example.org \
